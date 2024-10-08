@@ -63,14 +63,15 @@ button {
     font-size: 1.8rem;
 }
 
-.column {
+.column{
     float: left;
     width: 33.33%;
     padding: 10px;
+    background-color:#aaa;
 }
     
   /* Clear floats after the columns */
-.row:after {
+.row:after{
     content: "";
     display: table;
     clear: both;
