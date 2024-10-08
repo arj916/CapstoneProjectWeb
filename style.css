@@ -21,9 +21,9 @@ body {
     max-width: 800px;
     margin: 0 auto;
     margin-bottom: 30px;
-    display: grid;
-    grid-gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+   /* // display: grid; */
+    /* grid-gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */
 }
 .card {
     background-color: white;
@@ -63,23 +63,15 @@ button {
     font-size: 1.8rem;
 }
 
-@media screen and (max-width: 600px) {
-    .column {
-        float: left;
-      }
-      
-      .left, .right {
-        width: 25%;
-      }
-      
-      .middle {
-        width: 50%;
-      }
+.column {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
 }
-  
+    
   /* Clear floats after the columns */
-  .row:after {
+.row:after {
     content: "";
     display: table;
     clear: both;
-  }
+}
