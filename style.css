@@ -66,12 +66,13 @@ button {
     float: left;
     width: 33.33%;
     padding: 10px;
-    background-color:#aaa;
+    height: 300px;
 }
     
   /* Clear floats after the columns */
-.row:after{
+  .row:after {
+    box-sizing: border-box;
     content: "";
     display: table;
     clear: both;
-}
+  }
