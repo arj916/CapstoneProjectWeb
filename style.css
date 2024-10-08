@@ -64,10 +64,17 @@ button {
 }
 
 @media screen and (max-width: 600px) {
-.column {
-    float: left;
-    width: 33.33%;
-  }
+    .column {
+        float: left;
+      }
+      
+      .left, .right {
+        width: 25%;
+      }
+      
+      .middle {
+        width: 50%;
+      }
 }
   
   /* Clear floats after the columns */
@@ -78,5 +85,5 @@ button {
   }
 
 .subSquare {
-    
+
 }
