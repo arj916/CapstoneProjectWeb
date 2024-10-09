@@ -76,3 +76,7 @@ button {
     display: table;
     clear: both;
   }
+
+  .row {
+    display: flex;
+  }
