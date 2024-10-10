@@ -68,6 +68,8 @@ button {
     width: 33.33%;
     padding: 10px;
     border: white;
+    height: 100%;
+    min-height: 450px
 }
 
     
