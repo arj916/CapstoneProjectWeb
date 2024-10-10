@@ -73,7 +73,6 @@ button {
     
   /* Clear floats after the columns */
   .row:after {
-    box-sizing: border-box;
     content: "";
     display: table;
     clear: both;
