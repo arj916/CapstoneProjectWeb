@@ -13,6 +13,7 @@ h1 {
 }
 body {
     margin: 0;
+    height: 100%;
 }
 .content {
     padding: 50px;
@@ -68,6 +69,7 @@ button {
         width: 33.33%;
         padding: 10px;
         border: #bebebe;
+        height: 60%;
     }
 }
     
