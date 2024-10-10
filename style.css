@@ -62,11 +62,13 @@ button {
     font-size: 1.8rem;
 }
 
-.column{
-    float: left;
-    width: 33.33%;
-    padding: 10px;
-    height: 300px;
+@media screen and (max-width: 600px) {
+    .column{
+        float: left;
+        width: 33.33%;
+        padding: 10px;
+        border: white;
+    }
 }
     
   /* Clear floats after the columns */
