@@ -76,6 +76,8 @@ button {
     content: "";
     display: table;
     clear: both;
+    box-sizing: border-box;
+    max-width: 100%;
   }
 
 @media screen and (max-width: 600px) {
