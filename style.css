@@ -79,12 +79,12 @@ button {
     clear: both;
   }
 
+.row {
+    display: flex;
+  }
+
 @media screen and (max-width: 600px) {
    .column {
      width: 100%;
    }
-
-.row {
-    display: flex;
-  }
 }
