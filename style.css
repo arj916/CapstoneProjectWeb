@@ -69,6 +69,7 @@ button {
     border: 1px solid white;
     min-height: 450px;
     box-sizing: border-box;
+    height: 100%;
 }
 
 .row:after {
