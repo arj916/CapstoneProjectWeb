@@ -83,4 +83,8 @@ button {
    .column {
      width: 100%;
    }
+
+.row {
+    display: flex;
+  }
 }
