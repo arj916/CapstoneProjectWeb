@@ -71,12 +71,6 @@ button {
     height: 100%;
     min-height: 450px
 }
-
-@media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-  }
-}
     
   /* Clear floats after the columns */
   .row:after {
