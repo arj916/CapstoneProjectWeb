@@ -115,9 +115,11 @@
         .then(service => {
             bleServiceFound = service;
             console.log("Service discovered:", service.uuid);
-            return [service.getCharacteristic(voltageCharacteristic), service.getCharacteristic(currentCharacteristic)];
+            let voltageChar = service.getCharacteristic(voltageCharacteristic);
+            let currentChar = service.getCharacteristic(currentCharacteristic);
+            return {voltageChar, currentChar};
         })
-        .then(([voltageChar, currentChar]) => {
+        .then(({voltageChar, currentChar}) => {
             console.log("Characteristic discovered:", voltageChar.uuid);
             voltageCharacteristicFound = voltageChar;
             voltageChar.addEventListener('characteristicvaluechanged', handleCharacteristicChangeVoltage);
@@ -128,9 +130,11 @@
             currentChar.addEventListener('characteristicvaluechanged', handleCharacteristicChangeCurrent);
             currentChar.startNotifications();
             console.log("Notifications Started.");
-            return [voltageChar.readValue(), currentChar.readValue() ];
+            let valueVoltage = voltageChar.readValue();
+            let valueCurrent = currentChar.readValue();
+            return [valueVoltage, valueCurrent];
         })
-        .then(([valueVoltage, valueCurrent]) => {
+        .then(({valueVoltage, valueCurrent}) => {
             console.log("Read value: ", valueVoltage);
             const decodedValueVoltage = new TextDecoder().decode(valueVoltage);
             console.log("Decoded value: ", decodedValueVoltage);
