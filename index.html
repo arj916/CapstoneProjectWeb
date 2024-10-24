@@ -13,8 +13,8 @@
 
 <div class="row">
     <div class="column" style=" background-color:#bbb;">
-        <h2>Fetched Value</h2>
-        <p><span id="valueContainer">NaN</span></p>
+        <h2>Fetched Voltage Value</h2>
+        <p><span id="valueContainerVoltage">NaN</span></p>
         <p>Last reading: <span id="timestamp"></span></p>
         <h2>Possible Device Information</h2>
         <p>Some text..</p>
@@ -33,8 +33,11 @@
     </div>
 </div>
 <div>
-    <h2>Extra Info</h2>
-    <p>Some text..</p>
+    <h2>Fetched Current Value</h2>
+        <p><span id="valueContainerCurrent">NaN</span></p>
+        <p>Last reading: <span id="timestamp"></span></p>
+        <h2>Possible Device Information</h2>
+        <p>Some text..</p>
 </div>
 </body>
 <script>
@@ -43,7 +46,8 @@
     const disconnectButton = document.getElementById('disconnectBleButton');
     const onButton = document.getElementById('onButton');
     const offButton = document.getElementById('offButton');
-    const retrievedValue = document.getElementById('valueContainer');
+    const retrievedValueVoltage = document.getElementById('valueContainerVoltage');
+     const retrievedValueCurrent = document.getElementById('valueContainerCurrent');
     const latestValueSent = document.getElementById('valueSent');
     const bleStateContainer = document.getElementById('bleState');
     const timestampContainer = document.getElementById('timestamp');
@@ -52,12 +56,14 @@
     var deviceName ='ESP32';
     var bleService = '19b10000-e8f2-537e-4f6c-d104768a1214';
     var ledCharacteristic = '19b10002-e8f2-537e-4f6c-d104768a1214';
-    var sensorCharacteristic= '19b10001-e8f2-537e-4f6c-d104768a1214';
+    var voltageCharacteristic= '19b10001-e8f2-537e-4f6c-d104768a1214';
+    var sensorCharacteristic= '19b10003-e8f2-537e-4f6c-d104768a1214';
 
     //Global Variables to Handle Bluetooth
     var bleServer;
     var bleServiceFound;
-    var sensorCharacteristicFound;
+    var voltageCharacteristicFound;
+    var currentCharacteristicFound;
 
     // Connect Button (search for BLE Devices only if BLE is available)
     connectButton.addEventListener('click', (event) => {
@@ -106,21 +112,32 @@
         .then(service => {
             bleServiceFound = service;
             console.log("Service discovered:", service.uuid);
-            return service.getCharacteristic(sensorCharacteristic);
+            return [service.getCharacteristic(voltageCharacteristic), service.getCharacteristic(currentCharacteristic)];
         })
         .then(characteristic => {
-            console.log("Characteristic discovered:", characteristic.uuid);
-            sensorCharacteristicFound = characteristic;
-            characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
-            characteristic.startNotifications();
+    
+            console.log("Characteristic discovered:", characteristic[0].uuid);
+            voltageCharacteristicFound = characteristic[0];
+            characteristic[0].addEventListener('characteristicvaluechanged', handleCharacteristicChangeVoltage);
+            characteristic[0].startNotifications();
             console.log("Notifications Started.");
-            return characteristic.readValue();
+            console.log("Characteristic discovered:", characteristic[1].uuid);
+            currentCharacteristicFound = characteristic[1];
+            characteristic[1].addEventListener('characteristicvaluechanged', handleCharacteristicChangeCurrent);
+            characteristic[1].startNotifications();
+            console.log("Notifications Started.");
+            return [characteristic[0].readValue(), characteristic[1].readValue()];
         })
         .then(value => {
-            console.log("Read value: ", value);
-            const decodedValue = new TextDecoder().decode(value);
-            console.log("Decoded value: ", decodedValue);
-            retrievedValue.innerHTML = decodedValue;
+            console.log("Read  Voltage value: ", value[0]);
+            const decodedValueVoltage = new TextDecoder().decode(value[0]);
+            console.log("Decoded Voltage value: ", decodedValueVoltage);
+            retrievedValueVoltage.innerHTML = decodedValueVoltage;
+        
+            console.log("Read  Current value: ", value[1]);
+            const decodedValueCurrent = new TextDecoder().decode(value[1]);
+            console.log("Decoded Current value: ", decodedValueCurrent);
+            retrievedValueCurrent.innerHTML = decodedValueCurrent;
         })
         .catch(error => {
             console.log('Error: ', error);
@@ -135,12 +152,20 @@
         connectToDevice();
     }
 
-    function handleCharacteristicChange(event){
+    function handleCharacteristicChangeVoltage(event){
         const newValueReceived = new TextDecoder().decode(event.target.value);
         console.log("Characteristic value changed: ", newValueReceived);
-        retrievedValue.innerHTML = newValueReceived;
+        retrievedValueVoltage.innerHTML = newValueReceived;
         timestampContainer.innerHTML = getDateTime();
     }
+
+    function handleCharacteristicChangeCurrent(event){
+        const newValueReceived = new TextDecoder().decode(event.target.value);
+        console.log("Characteristic value changed: ", newValueReceived);
+        retrievedValueCurrent.innerHTML = newValueReceived;
+        timestampContainer.innerHTML = getDateTime();
+    }
+
 
     function writeOnCharacteristic(value){
         if (bleServer && bleServer.connected) {
@@ -166,8 +191,8 @@
     function disconnectDevice() {
         console.log("Disconnect Device.");
         if (bleServer && bleServer.connected) {
-            if (sensorCharacteristicFound) {
-                sensorCharacteristicFound.stopNotifications()
+            if (voltageCharacteristicFound) {
+                voltageCharacteristicFound.stopNotifications()
                     .then(() => {
                         console.log("Notifications Stopped");
                         return bleServer.disconnect();
@@ -182,7 +207,25 @@
                         console.log("An error occurred:", error);
                     });
             } else {
-                console.log("No characteristic found to disconnect.");
+                console.log("No voltage characteristic found to disconnect.");
+            }
+            if (currentCharacteristicFound) {
+                currentCharacteristicFound.stopNotifications()
+                    .then(() => {
+                        console.log("Notifications Stopped");
+                        return bleServer.disconnect();
+                    })
+                    .then(() => {
+                        console.log("Device Disconnected");
+                        bleStateContainer.innerHTML = "Device Disconnected";
+                        bleStateContainer.style.color = "#d13a30";
+
+                    })
+                    .catch(error => {
+                        console.log("An error occurred:", error);
+                    });
+            } else {
+                console.log("No current characteristic found to disconnect.");
             }
         } else {
             // Throw an error if Bluetooth is not connected
