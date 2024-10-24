@@ -117,6 +117,7 @@
             console.log("Service discovered:", service.uuid);
             let voltageChar = service.getCharacteristic(voltageCharacteristic);
             let currentChar = service.getCharacteristic(currentCharacteristic);
+            console.log("Characteristic discovered voltage:", currentChar.uuid);
             return voltageChar;
         })
         .then(characteristic => {
@@ -130,7 +131,7 @@
             // characteristic.currentChar.addEventListener('characteristicvaluechanged', handleCharacteristicChangeCurrent);
             // characteristic.currentChar.startNotifications();
             // console.log("Notifications Started.");
-            let valueVoltage = characteristic.voltageChar.readValue();
+            let valueVoltage = characteristic.readValue();
             // let valueCurrent = characteristic.currentChar.readValue();
             return valueVoltage;
         })
