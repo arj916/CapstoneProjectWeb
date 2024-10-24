@@ -117,11 +117,11 @@
             console.log("Service discovered:", service.uuid);
             let voltageChar = service.getCharacteristic(voltageCharacteristic);
             let currentChar = service.getCharacteristic(currentCharacteristic);
-            console.log("Characteristic discovered voltage:", currentChar.uuid);
-            return voltageChar;
+           
+            return currentChar;
         })
         .then(characteristic => {
-            console.log("Characteristic discovered voltage:", characteristic.uuid);
+            console.log("Characteristic discovered current:", characteristic.uuid);
             voltageCharacteristicFound = characteristic;
             characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChangeVoltage);
             characteristic.startNotifications();
@@ -149,6 +149,7 @@
         .catch(error => {
             console.log('Error: ', error);
         })
+
     }
 
     function onDisconnected(event){
