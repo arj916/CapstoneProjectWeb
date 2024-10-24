@@ -117,26 +117,26 @@
             console.log("Service discovered:", service.uuid);
             return [service.getCharacteristic(voltageCharacteristic), service.getCharacteristic(currentCharacteristic)];
         })
-        .then(characteristic => {
-            console.log("Characteristic discovered:", characteristic[0].uuid);
-            voltageCharacteristicFound = characteristic[0];
-            characteristic[0].addEventListener('characteristicvaluechanged', handleCharacteristicChangeVoltage);
-            characteristic[0].startNotifications();
+        .then(([voltageChar, currentChar]) => {
+            console.log("Characteristic discovered:", voltageChar.uuid);
+            voltageCharacteristicFound = voltageChar;
+            voltageChar.addEventListener('characteristicvaluechanged', handleCharacteristicChangeVoltage);
+            voltageChar.startNotifications();
             console.log("Notifications Started.");
-            console.log("Characteristic discovered:", characteristic[1].uuid);
-            currentCharacteristicFound = characteristic[1];
-            characteristic[1].addEventListener('characteristicvaluechanged', handleCharacteristicChangeCurrent);
-            characteristic[1].startNotifications();
+            console.log("Characteristic discovered:", currentChar.uuid);
+            currentCharacteristicFound = currentChar;
+            currentChar.addEventListener('characteristicvaluechanged', handleCharacteristicChangeCurrent);
+            currentChar.startNotifications();
             console.log("Notifications Started.");
-            return [characteristic[0].readValue(), characteristic[1].readValue() ];
+            return [voltageChar.readValue(), currentChar.readValue() ];
         })
-        .then(value => {
-            console.log("Read value: ", value[0]);
-            const decodedValueVoltage = new TextDecoder().decode(value[0]);
+        .then(([valueVoltage, valueCurrent]) => {
+            console.log("Read value: ", valueVoltage);
+            const decodedValueVoltage = new TextDecoder().decode(valueVoltage);
             console.log("Decoded value: ", decodedValueVoltage);
             retrievedValueVoltage.innerHTML = decodedValueVoltage;
-            console.log("Read value: ", value[1]);
-            const decodedValueCurrent = new TextDecoder().decode(value[1]);
+            console.log("Read value: ", valueCurrent);
+            const decodedValueCurrent = new TextDecoder().decode(valueCurrent);
             console.log("Decoded value: ", decodedValueCurrent);
             retrievedValueVoltage.innerHTML = decodedValueVoltage;
             retrievedValueCurrent.innerHTML = decodedValueCurrent;
