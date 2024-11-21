@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Canopy Power</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico">
+</head>
+<body>
+    <link rel="stylesheet" href="style.css">
+    <header>
+        <h1>Canopy Power: A Solar-Powered Beach Umbrella</h1>
+    </header>
+
+    <div class="container">
+        <!-- <div class="column control">
+            <h2>How To:</h2>
+            <p>...</p>
+            <p><br></p>
+
+            <button id="connectBleButton">Connect to Umbrella</button>
+            <button id="disconnectBleButton">Disconnect from Umbrella</button>
+            <p>BLE state: <strong><span id="bleState" class="disconnected">Disconnected</span></strong></p>
+        </div> -->
+
+        <div class="column control">
+            <h2>How To</h2>
+            <ol>
+                <li><strong>Connect to the Umbrella:</strong>
+                    <ul>
+                        <li>Click the <em>Connect to Umbrella</em> button.</li>
+                        <li>Select the device from the list of available Bluetooth devices.</li>
+                        <li>Once connected, the <em>BLE state</em> will change to <strong>Connected</strong>.</li>
+                    </ul>
+                </li>
+                <li><strong>Check Battery Level:</strong>
+                    <ul>
+                        <li>After connecting, the battery level will automatically update under <em>Battery Level</em>.</li>
+                    </ul>
+                </li>
+                <li><strong>Earn Points:</strong>
+                    <ul>
+                        <li>Use the umbrella to charge your devices and earn points for every watt-hour of energy used.</li>
+                        <li>Your total points will display under <em>Points Earned</em>.</li>
+                    </ul>
+                </li>
+                <li><strong>Track Fossil Fuel Savings:</strong>
+                    <ul>
+                        <li>Your usage will also calculate fossil fuel savings, displayed under <em>Fossil Fuel Savings</em>.</li>
+                    </ul>
+                </li>
+                <li><strong>Disconnect from the Umbrella:</strong>
+                    <ul>
+                        <li>Click the <em>Disconnect from Umbrella</em> button to end the session.</li>
+                        <li>The <em>BLE state</em> will change back to <strong>Disconnected</strong>.</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="column info">
+            <h2>Fetched Value</h2>
+            <p><span id="valueContainer">NaN</span></p>
+            <p>Last reading: <span id="timestamp">--</span></p>
+            <p><br></p>
+
+            <h2>Battery Level</h2>
+            <p>Battery: <span id="batteryLevelContainer">--</span>%</p>
+            <p><br></p>
+
+
+            <button id="connectBleButton">Connect to Umbrella</button>
+            <button id="disconnectBleButton">Disconnect from Umbrella</button>
+            <p>BLE state: <strong><span id="bleState" class="disconnected">Disconnected</span></strong></p>
+        </div>
+        
+        <div class="column points">
+            <h2>Points Earned</h2>
+            <p><span id="pointsContainer">No points available</span></p>
+            <p><br></p>
+            
+            <h2>Fossil Fuel Savings</h2>
+            <p><span id="fossilFuelSavings">No point data</span></p>
+        </div>
+    </div>
+
+    <div class="info-section">
+        <h2>Did You Know?</h2>
+        <p>Using solar energy to charge devices helps reduce reliance on fossil fuels and decreases greenhouse gas emissions.</p>
+        <p>On average, 386 grams of CO<sub>2</sub> are emitted per kWh in the US, and charging one smartphone consumes about 2-4 kWh per year!</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
